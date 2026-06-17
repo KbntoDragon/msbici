@@ -1,1 +1,29 @@
-spring.application.name=gateway
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: inventario-service
+              uri: lb://ms
+              predicates:
+                - Path=/api/v1/productos,Path=/api/v1/repuesto,Path=/api/v1/servicios
+
+            - id: ventas-service
+              uri: lb://ms2
+              predicates:
+                - Path=/api/v1/boletas,Path=/api/v1/tipoPago
+            
+            - id: bicicleta-service
+              uri: lb://ms3
+              pridcates:
+                - Path=/api/v1/bicicletas,Path=/api/v1/colores,Path=/api/v1/marcas,Path=/api/v1/modelos
+            
+            - id: persona-service
+              uri: lb://ms4
+              pedicates:
+                - Path=/api/v1/clientes, Path=/api/v1/empleados
