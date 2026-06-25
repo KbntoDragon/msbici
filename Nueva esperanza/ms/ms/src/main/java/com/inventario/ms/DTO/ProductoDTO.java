@@ -15,6 +15,6 @@ public class ProductoDTO {
     private Double precio;
     private Integer stock;
     private String codigoBarras;
-    private List<Integer> boletas;
+    private Integer boleta_id;
 
 }

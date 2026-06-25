@@ -14,5 +14,5 @@ public class ServicioDTO {
     private String nombreServicio;
     private String descServicio;
     private Double valorDelServicio;
-    private List<Integer> boletas;
+    private Integer boleta_id;
 }

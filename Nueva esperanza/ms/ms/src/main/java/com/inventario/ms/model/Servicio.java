@@ -1,13 +1,12 @@
 package com.inventario.ms.model;
 
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -37,6 +36,6 @@ public class Servicio {
     @Column(nullable = false, length = 10)
     private Double valorDelServicio;
 
-    @ManyToMany(mappedBy = "servicios")
-    private List<Integer> boletas;
+    @OneToOne(mappedBy = "servicios")
+    private Integer boleta_id;
 }

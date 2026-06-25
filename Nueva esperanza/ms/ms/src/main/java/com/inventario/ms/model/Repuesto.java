@@ -1,13 +1,11 @@
 package com.inventario.ms.model;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -43,7 +41,6 @@ public class Repuesto {
     @Column(nullable = true, length = 100)
     private String codigoBarras;
 
-    @ManyToMany(mappedBy = "repuestos")
-    private List<Integer> boletas;
-
+    @OneToOne(mappedBy = "repuestos")
+    private Integer boleta_id;
 }

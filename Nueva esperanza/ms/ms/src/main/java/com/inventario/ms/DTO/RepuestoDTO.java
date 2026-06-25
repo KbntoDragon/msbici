@@ -15,5 +15,5 @@ public class RepuestoDTO {
     private Double precio;
     private Integer stockRepuesto;
     private String codigoBarras;
-    private List<Integer> boletas;
+    private Integer boleta_id;
 }
