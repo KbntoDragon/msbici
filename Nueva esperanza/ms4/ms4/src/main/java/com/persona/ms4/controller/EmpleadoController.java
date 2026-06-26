@@ -78,7 +78,7 @@ public class EmpleadoController {
     public ResponseEntity<String> eliminarEmpleado(@PathVariable Integer id) {
         String resultado = empleadoService.eliminarPorId(id);
         
-        if (resultado.contains("Eliminado exitosamente!")) {
+        if (resultado.contains("exito")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);

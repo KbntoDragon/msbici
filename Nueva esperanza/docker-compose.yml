@@ -1,0 +1,106 @@
+# Orquestación local de todo el ecosistema "Nueva Esperanza".
+# Levanta: MySQL + 4 microservicios + gateway, todos en la misma red.
+# Uso: docker compose up --build
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ne-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"   # 3307 en el host para no chocar con un MySQL local
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - ne-net
+
+  ms:
+    build: ./ms/ms
+    container_name: ne-ms-inventario
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:mysql://mysql:3306/db_inventario?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: root
+    ports:
+      - "8081:8081"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ne-net
+
+  ms2:
+    build: ./ms2/ms2
+    container_name: ne-ms-ventas
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:mysql://mysql:3306/db_ventas?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: root
+      MS_INVENTARIO_URL: http://ms:8081
+    ports:
+      - "8082:8082"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ne-net
+
+  ms3:
+    build: ./ms3/ms3
+    container_name: ne-ms-bicicleta
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:mysql://mysql:3306/db_bicicleta?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: root
+    ports:
+      - "8083:8083"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ne-net
+
+  ms4:
+    build: ./ms4/ms4
+    container_name: ne-ms-persona
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:mysql://mysql:3306/db_persona?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: root
+    ports:
+      - "8084:8084"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ne-net
+
+  gateway:
+    build: ./gateway/gateway
+    container_name: ne-gateway
+    environment:
+      MS_INVENTARIO_URI: http://ms:8081
+      MS_VENTAS_URI: http://ms2:8082
+      MS_BICICLETA_URI: http://ms3:8083
+      MS_PERSONA_URI: http://ms4:8084
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ms
+      - ms2
+      - ms3
+      - ms4
+    networks:
+      - ne-net
+
+networks:
+  ne-net:
+    driver: bridge

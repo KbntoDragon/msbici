@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bicicleta.ms3.DTO.ModeloDTO;
+import com.bicicleta.ms3.model.Modelo;
+import com.bicicleta.ms3.service.ModeloService;
+
 
 @RestController
 @RequestMapping("/api/v1/modelos")

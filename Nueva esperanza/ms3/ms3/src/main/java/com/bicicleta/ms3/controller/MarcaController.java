@@ -85,7 +85,7 @@ public class MarcaController {
     public ResponseEntity<String> eliminarMarca(@PathVariable Integer id) {
         String resultado = marcaService.eliminar(id);
         
-        if (resultado.contains("Eliminado exitosamente!")) {
+        if (resultado.contains("exito")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);

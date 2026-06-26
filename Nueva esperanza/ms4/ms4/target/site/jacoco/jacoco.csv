@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+,com.persona.ms4.controller,EmpleadoController,17,91,2,2,4,19,2,7,0,7
+,com.persona.ms4.controller,ClienteController,5,86,1,1,1,18,1,7,0,7
+,com.persona.ms4.service,EmpleadoService,26,123,2,4,5,28,4,10,2,9
+,com.persona.ms4.service,ClienteService,22,122,1,3,4,28,2,11,1,10

@@ -41,6 +41,6 @@ public class Repuesto {
     @Column(nullable = true, length = 100)
     private String codigoBarras;
 
-    @OneToOne(mappedBy = "repuestos")
+    // Referencia floja a la boleta del microservicio de ventas (no es relación JPA local)
     private Integer boleta_id;
 }

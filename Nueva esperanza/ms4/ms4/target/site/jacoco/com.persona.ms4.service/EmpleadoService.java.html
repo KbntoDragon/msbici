@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmpleadoService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.persona.ms4.service</a> &gt; <span class="el_source">EmpleadoService.java</span></div><h1>EmpleadoService.java</h1><pre class="source lang-java linenums">package com.persona.ms4.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.persona.ms4.DTO.EmpleadoDTO;
+import com.persona.ms4.modelo.Empleado;
+import com.persona.ms4.repository.EmpleadoRepository;
+
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
+<span class="fc" id="L17">public class EmpleadoService {</span>
+    @Autowired
+    private EmpleadoRepository empleadoRepository;
+
+    public List&lt;EmpleadoDTO&gt; findAll() {
+<span class="fc" id="L22">        List&lt;EmpleadoDTO&gt; listaDTOs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L23">        List&lt;Empleado&gt; empleadosReales = empleadoRepository.findAll();</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        for (Empleado emp : empleadosReales) {</span>
+<span class="fc" id="L25">            listaDTOs.add(convertirADTO(emp));</span>
+<span class="fc" id="L26">        }</span>
+<span class="fc" id="L27">        return listaDTOs;</span>
+    }
+
+    public EmpleadoDTO buscarPorId(Integer id) {
+<span class="fc" id="L31">        Empleado empleado = empleadoRepository.findById(id)</span>
+<span class="pc" id="L32">                .orElseThrow(() -&gt; new RuntimeException(&quot;Empleado no encontrado con id: &quot; + id));</span>
+<span class="nc" id="L33">        return convertirADTO(empleado);</span>
+    }
+
+    public EmpleadoDTO guardarEmpleado(Empleado nuevoEmpleado) {
+<span class="fc" id="L37">        Empleado guardado = empleadoRepository.save(nuevoEmpleado);</span>
+<span class="fc" id="L38">        return convertirADTO(guardado);</span>
+    }
+
+    public List&lt;Empleado&gt; buscarPorNombre(String nombres) {
+<span class="fc" id="L42">        List&lt;Empleado&gt; empleados = empleadoRepository.findByNombresContainingIgnoreCase(nombres);</span>
+
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if (empleados.isEmpty()) {</span>
+<span class="fc" id="L45">            throw new RuntimeException(&quot;No existen empleados con el nombre: &quot; + nombres);</span>
+        }
+<span class="nc" id="L47">        return empleados;</span>
+    }
+
+    public String eliminarPorId(Integer id) {
+        try {
+<span class="fc" id="L52">            Empleado empleado = empleadoRepository.findById(id)</span>
+<span class="pc" id="L53">            .orElseThrow(() -&gt; new RuntimeException(&quot;No se puede eliminar, el empleado no existe con id: &quot; + id));</span>
+<span class="fc" id="L54">            empleadoRepository.delete(empleado);</span>
+<span class="fc" id="L55">            return (&quot;Empleado eliminado exitosamente&quot;);     </span>
+
+<span class="nc" id="L57">        } catch (RuntimeException e) {</span>
+<span class="nc" id="L58">            return e.getMessage();</span>
+        }
+    }
+
+    public Empleado actualizarEmpleado(Integer id, Empleado empleadoActualizado) {
+<span class="pc" id="L63">        Empleado empleado = empleadoRepository.findById(id).orElseThrow(() -&gt; new RuntimeException(&quot;No se encuentra el empleado.&quot;));</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if(empleado != null) {</span>
+<span class="fc" id="L65">            empleado.setNombres(empleadoActualizado.getNombres());</span>
+<span class="fc" id="L66">            empleado.setApellidos(empleadoActualizado.getApellidos());</span>
+<span class="fc" id="L67">            return empleadoRepository.save(empleado);</span>
+        }
+<span class="nc" id="L69">        return null;</span>
+    }
+
+    private EmpleadoDTO convertirADTO(Empleado empleado) {
+<span class="fc" id="L73">        EmpleadoDTO dto = new EmpleadoDTO();</span>
+<span class="fc" id="L74">        dto.setId(empleado.getId());</span>
+<span class="fc" id="L75">        dto.setNombres(empleado.getNombres());</span>
+<span class="fc" id="L76">        dto.setApellidos(empleado.getApellidos());</span>
+<span class="fc" id="L77">        return dto;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

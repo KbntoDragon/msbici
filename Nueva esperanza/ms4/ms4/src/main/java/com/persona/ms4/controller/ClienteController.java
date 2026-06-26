@@ -17,10 +17,12 @@ import com.persona.ms4.DTO.ClienteDTO;
 import com.persona.ms4.modelo.Cliente;
 import com.persona.ms4.service.ClienteService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
+@Tag(name = "Clientes", description = "Gestión de clientes del taller")
 public class ClienteController {
     
     @Autowired

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClienteService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.persona.ms4.service</a> &gt; <span class="el_source">ClienteService.java</span></div><h1>ClienteService.java</h1><pre class="source lang-java linenums">package com.persona.ms4.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.persona.ms4.DTO.ClienteDTO;
+import com.persona.ms4.modelo.Cliente;
+import com.persona.ms4.repository.ClienteRepository;
+
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
+<span class="fc" id="L17">public class ClienteService {</span>
+    
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    public List&lt;ClienteDTO&gt; findAll() {
+<span class="fc" id="L23">        List&lt;ClienteDTO&gt; listaDTOs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L24">        List&lt;Cliente&gt; clientesReales = clienteRepository.findAll();</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        for (Cliente cli : clientesReales) {</span>
+<span class="fc" id="L26">            listaDTOs.add(convertirADTO(cli));</span>
+<span class="fc" id="L27">        }</span>
+<span class="fc" id="L28">        return listaDTOs;</span>
+    }
+
+    public ClienteDTO buscarPorId(Integer id){
+<span class="fc" id="L32">        Cliente cli = clienteRepository.findById(id)</span>
+<span class="pc" id="L33">                .orElseThrow(() -&gt; new RuntimeException(&quot;Cliente no encontrada con id: &quot; + id));</span>
+<span class="nc" id="L34">        return convertirADTO(cli);</span>
+    }
+
+    public ClienteDTO guardarCliente(Cliente nuevoCliente) {
+<span class="fc" id="L38">        Cliente guardado = clienteRepository.save(nuevoCliente);</span>
+<span class="fc" id="L39">        return convertirADTO(guardado);</span>
+    }
+
+    public String eliminarPorId(Integer id){
+        try{
+<span class="fc" id="L44">            Cliente cliente = clienteRepository.findById(id)</span>
+<span class="pc" id="L45">            .orElseThrow(() -&gt; new RuntimeException(&quot;No se puede eliminar, el cliente no existe con el id:&quot; + id));</span>
+<span class="fc" id="L46">            clienteRepository.delete(cliente);</span>
+<span class="fc" id="L47">            return &quot;Cliente eliminado con exito&quot;;</span>
+<span class="nc" id="L48">        } catch (RuntimeException e){</span>
+<span class="nc" id="L49">            return e.getMessage();</span>
+        }
+    }
+
+    public ClienteDTO buscarPorCorreo(String correo) {
+<span class="pc" id="L54">    return clienteRepository.findByCorreo(correo)</span>
+<span class="fc" id="L55">            .map(this::convertirADTO)</span>
+<span class="pc" id="L56">            .orElseThrow(() -&gt; new RuntimeException(&quot;No se encontró un cliente con el correo: &quot; + correo));</span>
+}
+    public List&lt;Cliente&gt; buscarPorNombre(String nombre) {
+<span class="fc" id="L59">        List&lt;Cliente&gt; clientes = clienteRepository.findByNombres(nombre);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (clientes.isEmpty()) {</span>
+<span class="fc" id="L61">          throw new RuntimeException(&quot;No se encontraron clientes que coincidan con: &quot; + nombre);</span>
+    }
+<span class="nc" id="L63">        return clientes;</span>
+    }
+
+    public ClienteDTO convertirADTO(Cliente cliente){
+<span class="fc" id="L67">        ClienteDTO dto = new ClienteDTO();</span>
+<span class="fc" id="L68">        dto.setId(cliente.getId());</span>
+<span class="fc" id="L69">        dto.setNombres(cliente.getNombres());</span>
+<span class="fc" id="L70">        dto.setApellidos(cliente.getApellidos());</span>
+<span class="fc" id="L71">        dto.setCorreo(cliente.getCorreo());</span>
+<span class="fc" id="L72">        dto.setTelefono(cliente.getTelefono());</span>
+<span class="fc" id="L73">        return dto;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

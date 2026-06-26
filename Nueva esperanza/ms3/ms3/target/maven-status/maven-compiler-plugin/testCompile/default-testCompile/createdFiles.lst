@@ -1,0 +1,9 @@
+com/bicicleta/ms3/controller/ModeloControllerTest.class
+com/bicicleta/ms3/service/MarcaServiceTest.class
+com/bicicleta/ms3/controller/BicicletaControllerTest.class
+com/bicicleta/ms3/service/ColorServiceTest.class
+com/bicicleta/ms3/service/ModeloServiceTest.class
+com/bicicleta/ms3/Ms3ApplicationTests.class
+com/bicicleta/ms3/controller/ColorControllerTest.class
+com/bicicleta/ms3/service/BicicletaServiceTest.class
+com/bicicleta/ms3/controller/MarcaControllerTest.class

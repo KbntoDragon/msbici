@@ -18,8 +18,11 @@ import com.bicicleta.ms3.DTO.BicicletaDTO;
 import com.bicicleta.ms3.model.Bicicleta;
 import com.bicicleta.ms3.service.BicicletaService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/bicicletas")
+@Tag(name = "Bicicletas", description = "Gestión de bicicletas, búsqueda por cliente, modelo, marca y material")
 public class BicicletaController {
     
     @Autowired

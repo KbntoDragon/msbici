@@ -75,7 +75,7 @@ public class ColorController {
     public ResponseEntity<String> eliminarColor(@PathVariable Integer id) {
         String resultado = colorService.eliminar(id);
         
-        if (resultado.contains("Eliminado exitosamente!")) {
+        if (resultado.contains("exito")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);

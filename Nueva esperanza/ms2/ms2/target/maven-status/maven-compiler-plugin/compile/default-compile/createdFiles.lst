@@ -1,0 +1,16 @@
+com/ventas/ms2/controller/TipoPagoController.class
+com/ventas/ms2/repository/TipoPagoRepository.class
+com/ventas/ms2/DTO/BoletaDTO.class
+com/ventas/ms2/model/Boleta$BoletaBuilder.class
+com/ventas/ms2/service/TipoPagoService.class
+com/ventas/ms2/DTO/TipoPagoDTO.class
+com/ventas/ms2/repository/BoletaRepository.class
+com/ventas/ms2/controller/BoletaController.class
+com/ventas/ms2/model/TipoPago.class
+com/ventas/ms2/service/BoletaService.class
+com/ventas/ms2/model/TipoPago$TipoPagoBuilder.class
+com/ventas/ms2/model/Boleta.class
+com/ventas/ms2/Ms2Application.class
+com/ventas/ms2/DTO/ProductoDTO.class
+com/ventas/ms2/config/OpenApiConfig.class
+com/ventas/ms2/config/WebClientConfig.class

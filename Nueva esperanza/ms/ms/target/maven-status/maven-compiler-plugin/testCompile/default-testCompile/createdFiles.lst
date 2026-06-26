@@ -1,0 +1,7 @@
+com/inventario/ms/MsApplicationTests.class
+com/inventario/ms/services/RepuestoServiceTest.class
+com/inventario/ms/services/ProductoServiceTest.class
+com/inventario/ms/services/ServicioServiceTest.class
+com/inventario/ms/controller/ServicioControllerTest.class
+com/inventario/ms/controller/RepuestoControllerTest.class
+com/inventario/ms/controller/ProductoControllerTest.class

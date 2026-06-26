@@ -32,8 +32,12 @@ public class Bicicleta {
     @Size(max = 50, message = "El material debe tener un maximo de 50 caracteres")
     @Column(nullable = false, length = 50)
     private String material;
-    
-    
+
+    // Referencia floja al cliente dueño de la bicicleta (vive en el ms de persona/ms4)
+    @Column(name = "cliente_id")
+    private Integer clienteId;
+
+
     @ManyToMany
     @JoinTable(
         name = "bicicleta_color",

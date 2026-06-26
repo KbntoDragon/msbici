@@ -1,0 +1,14 @@
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/DTO/BoletaDTO.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/DTO/ProductoDTO.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/DTO/TipoPagoDTO.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/Ms2Application.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/config/OpenApiConfig.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/config/WebClientConfig.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/controller/BoletaController.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/controller/TipoPagoController.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/model/Boleta.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/model/TipoPago.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/repository/BoletaRepository.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/repository/TipoPagoRepository.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/service/BoletaService.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms2/ms2/src/main/java/com/ventas/ms2/service/TipoPagoService.java

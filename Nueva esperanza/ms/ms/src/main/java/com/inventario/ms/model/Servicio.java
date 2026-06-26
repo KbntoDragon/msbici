@@ -36,6 +36,6 @@ public class Servicio {
     @Column(nullable = false, length = 10)
     private Double valorDelServicio;
 
-    @OneToOne(mappedBy = "servicios")
+    // Referencia floja a la boleta del microservicio de ventas (no es relación JPA local)
     private Integer boleta_id;
 }
