@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MarcaService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.bicicleta.ms3.service</a> &gt; <span class="el_source">MarcaService.java</span></div><h1>MarcaService.java</h1><pre class="source lang-java linenums">package com.bicicleta.ms3.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bicicleta.ms3.DTO.MarcaDTO;
+import com.bicicleta.ms3.model.Marca;
+import com.bicicleta.ms3.repository.MarcaRepository;
+
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
+<span class="fc" id="L16">public class MarcaService {</span>
+   @Autowired
+    private MarcaRepository marcaRepository;
+
+    public List&lt;MarcaDTO&gt; obtenerMarcas() {
+<span class="fc" id="L21">        return marcaRepository.findAll().stream().map(this::convertirADTO).toList();</span>
+
+    }
+
+    public MarcaDTO buscarPorId(Integer id) {
+<span class="fc" id="L26">        Marca marca = marcaRepository.findById(id)</span>
+<span class="pc" id="L27">              .orElseThrow(() -&gt; new RuntimeException(&quot;Marca no encontrada con el id: &quot; + id));</span>
+<span class="nc" id="L28">        return convertirADTO(marca);</span>
+    }
+
+    public Marca buscarPorNombre(String nombre) {
+<span class="fc" id="L32">        return marcaRepository.findByNombre(nombre)</span>
+<span class="fc" id="L33">        .orElse(null);</span>
+    }
+
+    public Marca guardarMarca(Marca marca) {
+<span class="fc" id="L37">        return marcaRepository.save(marca);</span>
+    }
+
+    public String eliminar(Integer id) {
+        try {
+<span class="fc" id="L42">            Marca marca = marcaRepository.findById(id)</span>
+<span class="fc" id="L43">            .orElseThrow(() -&gt; new RuntimeException(&quot;No se puede eliminar, la marca no existe con el id: &quot; + id));</span>
+<span class="fc" id="L44">            marcaRepository.delete(marca);</span>
+<span class="fc" id="L45">            return (&quot;Marca eliminada exitosamente&quot;);</span>
+<span class="fc" id="L46">        } catch (RuntimeException e) {</span>
+<span class="fc" id="L47">            return e.getMessage();</span>
+        }
+    }
+
+    public Marca actualizarMarca(Integer id, Marca marcaActualizado) {
+<span class="pc" id="L52">        Marca marca = marcaRepository.findById(id).orElseThrow(() -&gt; new RuntimeException(&quot;No se encuentra la Marca&quot;));</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if(marca != null) {</span>
+<span class="fc" id="L54">            marca.setNombre(marcaActualizado.getNombre());</span>
+<span class="fc" id="L55">            return marcaRepository.save(marca);</span>
+        }
+<span class="nc" id="L57">        return null;</span>
+    }
+
+    
+    public MarcaDTO convertirADTO(Marca marca) {
+<span class="fc" id="L62">        MarcaDTO dto = new MarcaDTO();</span>
+<span class="fc" id="L63">        dto.setId(marca.getId());</span>
+<span class="fc" id="L64">        dto.setNombre(marca.getNombre());</span>
+
+<span class="pc bpc" id="L66" title="1 of 4 branches missed.">        if (marca.getBicicletas() != null &amp;&amp; !marca.getBicicletas().isEmpty()) {</span>
+<span class="fc" id="L67">            dto.setBicicletas(marca.getBicicletas().stream().map(bicicleta -&gt; bicicleta.getId()).toList());</span>
+        }
+<span class="fc" id="L69">        return dto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,13 @@
+com/persona/ms4/config/WebClientConfig.class
+com/persona/ms4/controller/ClienteController.class
+com/persona/ms4/modelo/Cliente.class
+com/persona/ms4/DTO/ClienteDTO.class
+com/persona/ms4/service/EmpleadoService.class
+com/persona/ms4/modelo/Empleado.class
+com/persona/ms4/controller/EmpleadoController.class
+com/persona/ms4/repository/EmpleadoRepository.class
+com/persona/ms4/DTO/EmpleadoDTO.class
+com/persona/ms4/repository/ClienteRepository.class
+com/persona/ms4/Ms4Application.class
+com/persona/ms4/service/ClienteService.class
+com/persona/ms4/config/OpenApiConfig.class

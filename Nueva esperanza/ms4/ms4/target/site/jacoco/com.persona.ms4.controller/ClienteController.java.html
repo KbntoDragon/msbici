@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClienteController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.persona.ms4.controller</a> &gt; <span class="el_source">ClienteController.java</span></div><h1>ClienteController.java</h1><pre class="source lang-java linenums">package com.persona.ms4.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.persona.ms4.DTO.ClienteDTO;
+import com.persona.ms4.modelo.Cliente;
+import com.persona.ms4.service.ClienteService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping(&quot;/api/v1/clientes&quot;)
+@Tag(name = &quot;Clientes&quot;, description = &quot;Gestión de clientes del taller&quot;)
+<span class="fc" id="L26">public class ClienteController {</span>
+    
+    @Autowired
+    private ClienteService clienteService;
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;ClienteDTO&gt;&gt; todos() {
+<span class="fc" id="L33">        List&lt;ClienteDTO&gt; lista = clienteService.findAll();</span>
+<span class="fc" id="L34">        return new ResponseEntity&lt;&gt;(lista, HttpStatus.OK);</span>
+    }
+    
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;?&gt; porId(@PathVariable Integer id) {
+        try {
+<span class="fc" id="L40">            ClienteDTO dto = clienteService.buscarPorId(id);</span>
+<span class="fc" id="L41">            return new ResponseEntity&lt;&gt;(dto, HttpStatus.OK);</span>
+<span class="fc" id="L42">        } catch (RuntimeException e) {</span>
+<span class="fc" id="L43">            return new ResponseEntity&lt;&gt;(e.getMessage(), HttpStatus.NOT_FOUND);</span>
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;?&gt; registrar(@Valid @RequestBody Cliente cliente) {
+        try {
+<span class="fc" id="L50">            ClienteDTO dto = clienteService.guardarCliente(cliente);</span>
+<span class="fc" id="L51">            return new ResponseEntity&lt;&gt;(dto, HttpStatus.CREATED);</span>
+<span class="fc" id="L52">        } catch (Exception e) {</span>
+<span class="fc" id="L53">            return new ResponseEntity&lt;&gt;(&quot;Error en la transmision de datos&quot;, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;String&gt; eliminarCliente(@PathVariable Integer id){
+<span class="fc" id="L59">        String mensajeAlerta = clienteService.eliminarPorId(id);</span>
+<span class="fc" id="L60">        return new ResponseEntity&lt;&gt;(mensajeAlerta, HttpStatus.OK);</span>
+    }
+    
+    @GetMapping(&quot;/correo/{correo}&quot;)
+    public ResponseEntity&lt;ClienteDTO&gt; buscarPorCorreo(@PathVariable String correo) {
+<span class="fc" id="L65">        ClienteDTO clienteDTO = clienteService.buscarPorCorreo(correo);</span>
+<span class="fc" id="L66">        return new ResponseEntity&lt;&gt;(clienteDTO, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/nombre/{nombre}&quot;)
+    public ResponseEntity&lt;List&lt;Cliente&gt;&gt; buscarPorNombre(@PathVariable String nombre) {
+<span class="fc" id="L71">        List&lt;Cliente&gt; clientes = clienteService.buscarPorNombre(nombre);</span>
+        
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (clientes.isEmpty()) {</span>
+<span class="nc" id="L74">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+        }
+<span class="fc" id="L76">        return new ResponseEntity&lt;&gt;(clientes, HttpStatus.OK);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColorController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.bicicleta.ms3.controller</a> &gt; <span class="el_source">ColorController.java</span></div><h1>ColorController.java</h1><pre class="source lang-java linenums">package com.bicicleta.ms3.controller;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bicicleta.ms3.DTO.ColorDTO;
+import com.bicicleta.ms3.model.Color;
+import com.bicicleta.ms3.service.ColorService;
+
+@RestController
+@RequestMapping(&quot;/api/v1/colores&quot;)
+<span class="fc" id="L23">public class ColorController {</span>
+    @Autowired
+    private ColorService colorService;
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;ColorDTO&gt;&gt; todosLosColores() {
+<span class="fc" id="L29">        List&lt;ColorDTO&gt; colores = colorService.obtenerColores();</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (colores.isEmpty()) {</span>
+<span class="fc" id="L31">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+        }
+<span class="fc" id="L33">        return new ResponseEntity&lt;&gt;(colores, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;ColorDTO&gt; buscarPorId(@PathVariable Integer id){
+<span class="fc" id="L38">        ColorDTO colores = colorService.buscarPorId(id);</span>
+<span class="fc" id="L39">        return new ResponseEntity&lt;&gt;(colores, HttpStatus.OK); </span>
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;ColorDTO&gt; guardarBoleta(@RequestBody Color color){
+        // 1. Guardamos la boleta en la base de datos
+<span class="fc" id="L45">        Color nuevoColor = colorService.guardarColor(color);</span>
+
+        // 2. La convertimos a DTO antes de enviarla a Postman
+<span class="fc" id="L48">        ColorDTO colorDTO = colorService.convertirADTO(nuevoColor);</span>
+
+        // 3. Retornamos el DTO
+<span class="fc" id="L51">        return new ResponseEntity&lt;&gt;(colorDTO, HttpStatus.CREATED);</span>
+    }
+
+    @PatchMapping (&quot;/{id}&quot;)
+    public ResponseEntity&lt;Color&gt; editarColor(@PathVariable Integer id, @RequestBody Color color) {
+        try {
+<span class="fc" id="L57">            Color editado = colorService.guardarColor(color);</span>
+<span class="fc" id="L58">            return new ResponseEntity&lt;&gt;(editado, HttpStatus.OK);</span>
+<span class="nc" id="L59">        } catch (RuntimeException e) {</span>
+<span class="nc" id="L60">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+    }
+
+    @PutMapping (&quot;/{id}&quot;)
+    public ResponseEntity&lt;Color&gt; actualizarColor(@PathVariable Integer id, @RequestBody Color color) {
+        try {
+<span class="fc" id="L67">            Color actualizado = colorService.actualizarColor(id, color);</span>
+<span class="fc" id="L68">            return new ResponseEntity&lt;&gt;(actualizado, HttpStatus.OK);</span>
+<span class="nc" id="L69">        } catch (RuntimeException e) {</span>
+<span class="nc" id="L70">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+    }
+
+    @DeleteMapping (&quot;/{id}&quot;)
+    public ResponseEntity&lt;String&gt; eliminarColor(@PathVariable Integer id) {
+<span class="fc" id="L76">        String resultado = colorService.eliminar(id);</span>
+        
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (resultado.contains(&quot;exito&quot;)) {</span>
+<span class="fc" id="L79">            return new ResponseEntity&lt;&gt;(resultado, HttpStatus.OK);</span>
+        } else {
+<span class="nc" id="L81">            return new ResponseEntity&lt;&gt;(resultado, HttpStatus.NOT_FOUND);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,13 @@
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/DTO/ClienteDTO.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/DTO/EmpleadoDTO.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/Ms4Application.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/config/OpenApiConfig.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/config/WebClientConfig.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/controller/ClienteController.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/controller/EmpleadoController.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/modelo/Cliente.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/modelo/Empleado.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/repository/ClienteRepository.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/repository/EmpleadoRepository.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/service/ClienteService.java
+/Users/Marco-Parra/Documents/ms nico/msbici/Nueva esperanza/ms4/ms4/src/main/java/com/persona/ms4/service/EmpleadoService.java

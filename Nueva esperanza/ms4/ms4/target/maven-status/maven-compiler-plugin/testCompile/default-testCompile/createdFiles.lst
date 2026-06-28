@@ -1,0 +1,5 @@
+com/persona/ms4/service/ClienteServiceTest.class
+com/persona/ms4/controller/ClienteControllerTest.class
+com/persona/ms4/controller/EmpleadoControllerTest.class
+com/persona/ms4/Ms4ApplicationTests.class
+com/persona/ms4/service/EmpleadoServiceTest.class

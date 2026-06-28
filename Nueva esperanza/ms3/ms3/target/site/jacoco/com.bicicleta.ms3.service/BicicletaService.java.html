@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BicicletaService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.bicicleta.ms3.service</a> &gt; <span class="el_source">BicicletaService.java</span></div><h1>BicicletaService.java</h1><pre class="source lang-java linenums">package com.bicicleta.ms3.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bicicleta.ms3.DTO.BicicletaDTO;
+import com.bicicleta.ms3.model.Bicicleta;
+import com.bicicleta.ms3.model.Marca;
+import com.bicicleta.ms3.repository.BicicletaRepository;
+
+
+@Service
+<span class="fc" id="L17">public class BicicletaService {</span>
+
+    @Autowired
+    private BicicletaRepository bicicletaRepository;
+
+    public List&lt;BicicletaDTO&gt; obtenerTodas() {
+<span class="fc" id="L23">        List&lt;BicicletaDTO&gt; listaDTOs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L24">        List&lt;Bicicleta&gt; bicicletasReales = bicicletaRepository.findAll();</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        for (Bicicleta bici : bicicletasReales) {</span>
+<span class="fc" id="L26">            listaDTOs.add(convertirADTO(bici));</span>
+<span class="fc" id="L27">        }</span>
+<span class="fc" id="L28">        return listaDTOs;</span>
+    }
+
+    public BicicletaDTO buscarPorId(Integer id) {
+<span class="fc" id="L32">        Bicicleta bici = bicicletaRepository.findById(id)</span>
+<span class="pc" id="L33">            .orElseThrow(() -&gt; new RuntimeException(&quot;Bicicleta no encontrada en los archivos&quot;));</span>
+<span class="nc" id="L34">        return convertirADTO(bici);</span>
+    }
+
+    public Bicicleta guardar(Bicicleta nuevaBicicleta) {
+        // Regla de negocio: el material es obligatorio
+<span class="pc bpc" id="L39" title="1 of 4 branches missed.">        if (nuevaBicicleta.getMaterial() == null || nuevaBicicleta.getMaterial().isBlank()) {</span>
+<span class="fc" id="L40">            throw new IllegalArgumentException(&quot;El material de la bicicleta es obligatorio&quot;);</span>
+        }
+<span class="fc" id="L42">        return bicicletaRepository.save(nuevaBicicleta);</span>
+    }
+
+    public Bicicleta actualizarBicicleta(Integer id, Bicicleta bicicleta){
+<span class="pc" id="L46">        Bicicleta bici = bicicletaRepository.findById(id).orElseThrow(() -&gt; new RuntimeException(&quot;No se puede actualizar, la bicicleta no existe con los registros&quot;));</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if(bicicleta.getMaterial() != null){</span>
+<span class="fc" id="L48">            bici.setMaterial(bicicleta.getMaterial());</span>
+        }
+<span class="fc" id="L50">        return bicicletaRepository.save(bici);</span>
+    }
+
+    public String eliminar(Integer id){
+        try{
+<span class="fc" id="L55">            Bicicleta bicicleta = bicicletaRepository.findById(id)</span>
+<span class="fc" id="L56">            .orElseThrow(() -&gt; new RuntimeException(&quot;No se puede eliminar, la bicicleta no existe con el id:&quot; + id));</span>
+<span class="fc" id="L57">            bicicletaRepository.delete(bicicleta);</span>
+<span class="fc" id="L58">            return &quot;Bicicleta eliminada con exito&quot;;</span>
+<span class="fc" id="L59">        } catch (RuntimeException e){</span>
+<span class="fc" id="L60">            return e.getMessage();</span>
+        }
+    }
+
+    // Búsquedas filtradas (usadas por el controller)
+    public List&lt;BicicletaDTO&gt; buscarPorCliente(Integer clienteId) {
+<span class="fc" id="L66">        return bicicletaRepository.findByClienteId(clienteId).stream()</span>
+<span class="fc" id="L67">                .map(this::convertirADTO)</span>
+<span class="fc" id="L68">                .toList();</span>
+    }
+
+    public List&lt;BicicletaDTO&gt; buscarPorModelo(Integer modeloId) {
+<span class="fc" id="L72">        return bicicletaRepository.findByModeloId(modeloId).stream()</span>
+<span class="fc" id="L73">                .map(this::convertirADTO)</span>
+<span class="fc" id="L74">                .toList();</span>
+    }
+
+    public List&lt;BicicletaDTO&gt; buscarPorMaterial(String material) {
+<span class="fc" id="L78">        return bicicletaRepository.findByMaterial(material).stream()</span>
+<span class="fc" id="L79">                .map(this::convertirADTO)</span>
+<span class="fc" id="L80">                .toList();</span>
+    }
+
+    public List&lt;BicicletaDTO&gt; buscarPorMarca(Integer marcaId) {
+<span class="fc" id="L84">        return bicicletaRepository.findByMarcasId(marcaId).stream()</span>
+<span class="fc" id="L85">                .map(this::convertirADTO)</span>
+<span class="fc" id="L86">                .toList();</span>
+    }
+
+    private BicicletaDTO convertirADTO(Bicicleta bici) {
+<span class="fc" id="L90">        BicicletaDTO dto = new BicicletaDTO();</span>
+<span class="fc" id="L91">        dto.setId(bici.getId());</span>
+<span class="fc" id="L92">        dto.setMaterial(bici.getMaterial());</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (bici.getModelo() != null) {</span>
+<span class="fc" id="L94">            dto.setModeloNombre(bici.getModelo().getNombreModelo());</span>
+        }
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">        if (bici.getMarcas() != null &amp;&amp; !bici.getMarcas().isEmpty()) {</span>
+<span class="fc" id="L97">            dto.setMarcas(bici.getMarcas().stream()</span>
+<span class="fc" id="L98">                    .map(Marca::getNombre)</span>
+<span class="fc" id="L99">                    .collect(Collectors.joining(&quot;, &quot;)));</span>
+        }
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (bici.getClienteId() != null) {</span>
+<span class="fc" id="L102">            dto.setClienteNombre(&quot;cliente#&quot; + bici.getClienteId());</span>
+        }
+<span class="fc" id="L104">        return dto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -19,13 +19,25 @@ import com.inventario.ms.DTO.ProductoDTO;
 import com.inventario.ms.model.Producto;
 import com.inventario.ms.services.ProductoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/productos")
+@Tag(name = "Productos", description = "Gestión de productos del inventario")
 public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
     //Listar
+    @Operation(summary = "Listar todos los productos",
+               description = "Devuelve la lista completa de productos. Responde 204 si no hay ninguno.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Lista de productos encontrada"),
+        @ApiResponse(responseCode = "204", description = "No hay productos registrados")
+    })
     @GetMapping
     public ResponseEntity<List<ProductoDTO>> listarProductos() {
         List<ProductoDTO> productos = productoService.obtenerProductos();
@@ -35,6 +47,11 @@ public class ProductoController {
         return new ResponseEntity<>(productos, HttpStatus.OK);
     }
     //Buscar id
+    @Operation(summary = "Buscar producto por id")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Producto encontrado"),
+        @ApiResponse(responseCode = "404", description = "Producto no existe")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<ProductoDTO> buscarProductoPorId(@PathVariable Integer id) {
         try {
@@ -45,6 +62,7 @@ public class ProductoController {
         }
     }
     //Buscar por codigobarra
+    @Operation(summary = "Buscar productos por código de barras")
     @GetMapping("/codigo/{codigoBarra}")
     public ResponseEntity<List<ProductoDTO>> buscarPorCodigoBarra(@PathVariable String codigoBarra) {
         try{
@@ -55,6 +73,12 @@ public class ProductoController {
         }
     }
     //guardar producto
+    @Operation(summary = "Crear un producto",
+               description = "Valida que el precio sea mayor a 0 y el stock no sea negativo.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Producto creado"),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos (precio o stock)")
+    })
     @PostMapping
     public ResponseEntity<Producto> guardarProducto(@RequestBody Producto producto) {
        try {
@@ -65,6 +89,7 @@ public class ProductoController {
        }
     }
     //eliminar por id
+    @Operation(summary = "Eliminar producto por id")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarProducto(@PathVariable Integer id) {
         String resultado = productoService.eliminarProducto(id);
@@ -76,6 +101,7 @@ public class ProductoController {
     }
 
     //buscar por nombre
+    @Operation(summary = "Buscar productos por nombre (contiene, ignora mayúsculas)")
     @GetMapping("/buscar")
     public ResponseEntity<List<ProductoDTO>> buscarPorNombre(@RequestParam String nombre){
         List<ProductoDTO> productos = productoService.buscarPorNombreDTO(nombre);
@@ -84,8 +110,9 @@ public class ProductoController {
         }
         return new ResponseEntity<>(productos, HttpStatus.OK);
     }
-    
+
     //sin Stock
+    @Operation(summary = "Listar productos sin stock")
     @GetMapping("/sin-stock")
     public ResponseEntity<List<ProductoDTO>> sinStock() {
         List<ProductoDTO> productos = productoService.obtenerProductoSinStockDTO();
@@ -96,6 +123,7 @@ public class ProductoController {
     }
 
     //actualizar
+    @Operation(summary = "Actualizar un producto existente")
     @PatchMapping("/{id}")
     public ResponseEntity<Producto> editarProducto(@PathVariable Integer id, @RequestBody Producto producto){
         try {
