@@ -1,0 +1,5 @@
+com/ventas/ms2/controller/BoletaControllerTest.class
+com/ventas/ms2/controller/TipoPagoControllerTest.class
+com/ventas/ms2/Ms2ApplicationTests.class
+com/ventas/ms2/service/BoletaServiceTest.class
+com/ventas/ms2/service/TipoPagoServiceTest.class
